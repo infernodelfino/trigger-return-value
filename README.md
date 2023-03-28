@@ -1,7 +1,8 @@
 # trigger-return-value
 
 # Add trigger for insert, update
-`CREATE TRIGGER tr_jhi_user
+```sql
+CREATE TRIGGER tr_jhi_user
 ON jhi_user
 AFTER INSERT, UPDATE
 AS
@@ -19,8 +20,8 @@ BEGIN
         SELECT 'updated' AS action, updated.*
         FROM updated
     END;
-END;`
-
+END;
+```
 # Use this cURL to add data
 curl --location 'http://localhost:8080/api/users' \
 --header 'Content-Type: application/json' \
