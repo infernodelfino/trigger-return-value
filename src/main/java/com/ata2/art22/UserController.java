@@ -3,9 +3,7 @@ package com.ata2.art22;
 import com.ata2.art22.entity.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/users")
@@ -17,12 +15,30 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestBody UserDTO userDTO) {
-//    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO) {
-//        UserDTO result = userService.preSave(userDTO);
-//         userService.save(userDTO);
-         userService.preSave(userDTO);
-        return ResponseEntity.ok(null);
+    @GetMapping
+    public ResponseEntity<Void> getAll() {
+        userService.getAll();
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateJPQL(@PathVariable Long id) {
+        userService.updateUsingJPQL(id);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PostMapping("/repo")
+    public ResponseEntity<UserDTO> saveRepo(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.saveRepo(userDTO));
+    }
+
+    @PostMapping("/em-persist")
+    public ResponseEntity<UserDTO> saveEmPersist(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.saveEmPersist(userDTO));
+    }
+
+    @PostMapping("/em-native")
+    public ResponseEntity<UserDTO> saveEmNative(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.saveEmNative(userDTO));
     }
 }
